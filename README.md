@@ -8,7 +8,7 @@ Hemos resuelto un programa para jugar al BlackJack. A partir de una baraja de 52
 El diagrama de flujo que tenemos en nuestro código es el siguiente: 
 
 <br>
-<img height="600" src="https://github.com/lauralardies/blackjack/blob/main/blackjack.jpg" />
+<img height="600" src=" " />
 <br>
 
 ```
