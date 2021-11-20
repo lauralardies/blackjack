@@ -5,7 +5,7 @@ def updateDeck ():
     return max_cards
 
 def selectCard():
-    max_cards = updateDeck
+    max_cards = updateDeck()
     while True:
         card = input("Please, choose a card between 1 and " + str(max_cards) + ": ")
         try:
@@ -26,6 +26,10 @@ def yourGame():
         deck.remove(card1)
         print ("The card you have chosen is " + card1 + ".")
         print("You have got " + str(points) + " points so far.")
+        if points > 21:
+            print("You have more than 21 points! You have lost this game.")
+            score.append(points)
+            break
         end = input("Do you want another card? [Y]/N: ")
         if str.upper(end) == "N":
             break
@@ -34,12 +38,16 @@ def yourGame():
 def dealerGame():
     pointsD = 0
     while True:
-        card = random.randint(1,52)
+        card = random.randint(1,len(deck))
         card1 = deck[card]
         pointsD = pointsD + card_values[card1]
         deck.remove(card1)
         print ("The card the Dealer has chosen is " + card1 + ".")
         print("The Dealer has " + str(pointsD) + " points so far.")
+        if pointsD > 21:
+            print("The Dealer has over 21 points! You have won this game.")
+            score.append(pointsD)
+            break
         if pointsD >= 16:
             break
     score.append(pointsD)
@@ -47,9 +55,11 @@ def dealerGame():
 def winner ():
     if score[0] > score[1]:
         print("Congratulations! You have won this game.")
-    else: 
+    elif score[0] > score[1]:
         print("You have lost this game!")
-    print("These are the final results: You " + score[0] + " points, the Dealer " + score[1] + " points.")
+    elif score[0] == score[1]:
+        print("You have lost this game!")
+    print("These are the final results: You " + str(score[0]) + " points, the Dealer " + str(score[1]) + " points.")
 
 card_values = { 
     chr(0x1f0a1): 11, 
@@ -67,15 +77,20 @@ card_values = {
     chr(0x1f0ae): 10, 
 } 
 
-deck = [chr(0x1f0a1), chr(0x1f0a2), chr(0x1f0a3), chr(0x1f0a4), chr(0x1f0a5), chr(0x1f0a6), chr(0x1f0a7), chr(0x1f0a8), chr(0x1f0a9), chr(0x1f0aa), chr(0x1f0ab), chr(0x1f0ad), chr(0x1f0ae)]*4
-random.shuffle(deck)
-
-score = [] 
-while True: 
-    yourGame()
-    print("Now it is the Dealers' turn!")
-    dealerGame()
-    winner()
+while True:
+    score = []
+    deck = [chr(0x1f0a1), chr(0x1f0a2), chr(0x1f0a3), chr(0x1f0a4), chr(0x1f0a5), chr(0x1f0a6), chr(0x1f0a7), chr(0x1f0a8), chr(0x1f0a9), chr(0x1f0aa), chr(0x1f0ab), chr(0x1f0ad), chr(0x1f0ae)]*4
+    random.shuffle(deck)
+    while True: 
+        yourGame()
+        if score[0] > 21:
+            break
+        print("Now it is the Dealers' turn!")
+        dealerGame()
+        if score[1] > 21:
+            break
+        winner()
+        break
     choice = input("Would you like to play again? [Y]/N: ")
     if str.upper(choice) == "N":
         break
