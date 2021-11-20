@@ -55,7 +55,7 @@ def dealerGame():
 def winner ():
     if score[0] > score[1]:
         print("Congratulations! You have won this game.")
-    elif score[0] > score[1]:
+    elif score[0] < score[1]:
         print("You have lost this game!")
     elif score[0] == score[1]:
         print("You have lost this game!")
